@@ -1,113 +1,112 @@
-import React, { useRef, useState, useEffect, MouseEvent } from 'react';
+import React, {MouseEvent, useEffect, useRef, useState} from 'react';
+import {Box} from "@mui/material";
 
 interface ImageEditorProps {
-  file: File;
+    file: File;
+    color: string;
+    brushSize: number;
+    onChange: (canvas: HTMLCanvasElement) => void;
 }
 
 interface DrawCoordinates {
-  x: number;
-  y: number;
+    x: number;
+    y: number;
 }
 
-const ImageEditor: React.FC<ImageEditorProps> = ({ file }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [drawing, setDrawing] = useState(false);
-  const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
-  const [color, setColor] = useState('#000000');
-  const [brushSize, setBrushSize] = useState(5);
+const ImageEditor: React.FC<ImageEditorProps> = ({file, onChange, color, brushSize}) => {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [drawing, setDrawing] = useState(false);
+    const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
 
-  useEffect(() => {
-    if (canvasRef.current) {
-      const canvasContext = canvasRef.current.getContext('2d');
-      setContext(canvasContext);
 
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const image = new Image();
-        image.src = event.target?.result as string;
-        image.onload = () => {
-          if (canvasContext && canvasRef.current) {
-            canvasRef.current.width = image.width;
-            canvasRef.current.height = image.height;
-            canvasContext.drawImage(image, 0, 0);
-          }
-        };
-      };
+    useEffect(() => {
+        if (canvasRef.current) {
+            const canvasContext = canvasRef.current.getContext('2d');
+            setContext(canvasContext);
 
-      reader.readAsDataURL(file);
-    }
-  }, [file]);
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const image = new Image();
+                image.src = event.target?.result as string;
+                image.onload = () => {
+                    if (canvasContext && canvasRef.current) {
+                        canvasRef.current.width = image.width;
+                        canvasRef.current.height = image.height;
+                        canvasContext.drawImage(image, 0, 0);
+                    }
+                };
+            };
 
-  const startDrawing = (event: MouseEvent) => {
-    setDrawing(true);
-    draw(event);
-  };
+            reader.readAsDataURL(file);
+        }
+    }, [file]);
 
-  const finishDrawing = () => {
-    setDrawing(false);
-    if (context) {
-      context.beginPath();
-    }
-  };
+    useEffect(() => {
+        if (canvasRef.current) {
+            onChange(canvasRef.current);
+        }
+    }, [canvasRef.current]);
 
-  const draw = (event: MouseEvent) => {
-    if (!drawing || !context) return;
-
-    const canvasPosition = canvasRef.current?.getBoundingClientRect();
-    if (!canvasPosition) return;
-
-    const coordinates: DrawCoordinates = {
-      x: event.clientX - canvasPosition.left,
-      y: event.clientY - canvasPosition.top,
+    const startDrawing = (event: MouseEvent) => {
+        setDrawing(true);
+        draw(event);
     };
 
-    context.lineWidth = brushSize;
-    context.lineCap = 'round';
-    context.strokeStyle = color;
+    const finishDrawing = () => {
+        setDrawing(false);
+        if (context) {
+            context.beginPath();
+        }
+    };
 
-    context.lineTo(coordinates.x, coordinates.y);
-    context.stroke();
+    const draw = (event: MouseEvent) => {
+        if (!drawing || !context) return;
 
-    context.beginPath();
-    context.moveTo(coordinates.x, coordinates.y);
-  };
+        const canvasPosition = canvasRef.current?.getBoundingClientRect();
+        if (!canvasPosition) return;
 
-  const saveImage = () => {
-    if (canvasRef.current) {
-      const dataUrl = canvasRef.current.toDataURL();
-      const link = document.createElement('a');
-      link.href = dataUrl;
-      link.download = 'edited-image.png';
-      link.click();
-    }
-  };
+        const coordinates: DrawCoordinates = {
+            x: event.clientX - canvasPosition.left,
+            y: event.clientY - canvasPosition.top,
+        };
 
-  return (
-    <div>
-      <canvas
-        ref={canvasRef}
-        onMouseDown={startDrawing}
-        onMouseUp={finishDrawing}
-        onMouseOut={finishDrawing}
-        onMouseMove={draw}
-      />
-      <div>
-        <input
-          type="color"
-          value={color}
-          onChange={(event) => setColor(event.target.value)}
-        />
-        <input
-          type="range"
-          min="1"
-          max="20"
-          value={brushSize}
-          onChange={(event) => setBrushSize(parseInt(event.target.value))}
-        />
-      </div>
-      <button onClick={saveImage}>Save Image</button>
-    </div>
-  );
+        context.lineWidth = brushSize;
+        context.lineCap = 'round';
+        context.strokeStyle = color;
+
+        context.lineTo(coordinates.x, coordinates.y);
+        context.stroke();
+
+        context.beginPath();
+        context.moveTo(coordinates.x, coordinates.y);
+    };
+
+    const saveImage = () => {
+        if (canvasRef.current) {
+            const dataUrl = canvasRef.current.toDataURL();
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = 'edited-image.png';
+            link.click();
+        }
+    };
+
+    return (
+        <Box sx={{
+            maxWidth: '100%',
+            aspectRatio: '16 / 9',
+            overflowX: 'auto',
+        }}>
+            <canvas
+                ref={canvasRef}
+                onMouseDown={startDrawing}
+                onMouseUp={finishDrawing}
+                onMouseOut={finishDrawing}
+                onMouseMove={draw}
+                style={{aspectRatio: '16 / 9'}}
+            />
+        </Box>
+    );
 };
 
 export default ImageEditor;

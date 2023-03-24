@@ -1,7 +1,8 @@
-import {AppBar, Box, Button, Toolbar} from "@mui/material";
+import {AppBar, Box, Button, Toolbar, useMediaQuery} from "@mui/material";
 import {type AppType} from "@/utils/types";
 import {type NextRouter, useRouter} from "next/router";
 import Link from "next/link";
+import {useMemo} from "react";
 
 function isActive(router: NextRouter, name: AppType) {
     return router.pathname === `/${name}`;
@@ -18,17 +19,17 @@ function getType(router: NextRouter, name: AppType) {
 export default function Header() {
     const router = useRouter();
 
-    function handleClick(name: AppType) {
+    const isSmOrLower = useMediaQuery(theme => {
+        return theme.breakpoints.down("sm");
+    })
 
-        return () => {
-            router.push(`/${name}`).catch(console.log);
+    const buttonSize = useMemo(() => {
+        if (isSmOrLower) {
+            return "small";
+        } else {
+            return "medium";
         }
-
-    }
-
-    const buttonStyles = {
-        textDecoration: "none !important",
-    }
+    }, [isSmOrLower])
 
     return (
         <AppBar>
@@ -36,22 +37,29 @@ export default function Header() {
                 <Box sx={{
                     display: "flex",
                     justifyContent: "space-between",
-                    width: "50vw",
-                    mx: "auto"
+                    width: {
+                        xl: "50svw",
+                        lg: "50svw",
+                        md: "60svw",
+                        sm: "90svw",
+                        xs: "100svw",
+                    },
+                    mx: "auto",
+                    gap: 2
                 }}>
                     <Link href={"/picshare"} style={{textDecoration: "none"}}>
-                        <Button variant={getType(router, "picshare")}>
+                        <Button variant={getType(router, "picshare")} size={buttonSize}>
                             PicShare
                         </Button>
                     </Link>
                     <Link href={"/musicbox"} style={{textDecoration: "none"}}>
-                        <Button variant={getType(router, "musicbox")}>
+                        <Button variant={getType(router, "musicbox")} size={buttonSize}>
                             MusicBox
                         </Button>
                     </Link>
 
                     <Link href={"/molegame"} style={{textDecoration: "none"}}>
-                        <Button variant={getType(router, "molegame")}>
+                        <Button variant={getType(router, "molegame")} size={buttonSize}>
                             MoleGame
                         </Button>
                     </Link>

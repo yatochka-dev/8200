@@ -1,4 +1,4 @@
-import {createTheme, type PaletteMode} from "@mui/material";
+import {createTheme, darkScrollbar, type PaletteMode} from "@mui/material";
 import {type ThemeOptions} from "@mui/material/styles/createTheme";
 
 
@@ -8,7 +8,12 @@ const defaultOptions: ThemeOptions = {
             defaultProps: {
                 variant: "contained"
             }
-        }
+        },
+        MuiCssBaseline: {
+            styleOverrides: (themeParam) => ({
+                body: darkScrollbar()
+            }),
+        },
     },
 }
 const darkTheme = createTheme({

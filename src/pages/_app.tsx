@@ -10,6 +10,7 @@ import useTheme from "@/hooks/useTheme";
 import Header from "@/components/header";
 import Layout from "@/components/Layout";
 import {AnimatePresence} from "framer-motion";
+import {ToastContainer} from "react-toastify";
 
 const MyApp: AppType<{ session: Session | null }> = ({
                                                          Component,
@@ -21,7 +22,13 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <ThemeProvider theme={theme}>
             <SessionProvider session={session}>
                 <Header/>
-                <Box component={"main"} pt={"64px"} overflow={"hidden"}>
+                <Box component={"main"} pt={{
+                    xl: "64px",
+                    lg: "64px",
+                    md: "80px",
+                    sm: "80px",
+                    xs: "80px",
+                }} overflow={"auto"}>
                     <Container>
                         <AnimatePresence mode={'wait'}>
                             <Layout key={router.asPath as string}>
@@ -34,6 +41,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
                             </Layout>
                         </AnimatePresence>
                     </Container>
+                    <ToastContainer theme={"dark"}/>
                 </Box>
                 <CssBaseline/>
             </SessionProvider>

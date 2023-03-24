@@ -23,10 +23,12 @@ specifiers:
   framer-motion: ^10.8.5
   next: ^13.2.1
   next-auth: ^4.19.0
+  pocketbase: ^0.12.1
   prettier: ^2.8.1
   prettier-plugin-tailwindcss: ^0.2.1
   react: 18.2.0
   react-dom: 18.2.0
+  react-toastify: ^9.1.2
   superjson: 1.9.1
   typescript: ^4.9.5
   zod: ^3.20.6
@@ -45,8 +47,10 @@ dependencies:
   framer-motion: 10.8.5_biqbaboplfbrettd7655fr4n2y
   next: 13.2.4_biqbaboplfbrettd7655fr4n2y
   next-auth: 4.20.1_ld2jel3hspngo3u5lti2kgl2sq
+  pocketbase: 0.12.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-toastify: 9.1.2_biqbaboplfbrettd7655fr4n2y
   superjson: 1.9.1
   zod: 3.21.4
 
@@ -3007,6 +3011,10 @@ packages:
     engines: {node: '>=8.6'}
     dev: true
 
+  /pocketbase/0.12.1:
+    resolution: {integrity: sha512-kihThVla/JontCGA2zVGuxk1vWtz/yt7FqnL241oxd+w7RBVNzLIRKN6GolnY9DGOekNmFRb57CL24sbUm4wJA==}
+    dev: false
+
   /postcss/8.4.14:
     resolution: {integrity: sha512-E398TUmfAYFPBSdzgeieK2Y1+1cpdxJx8yXbK/m57nRhKSmk1GB2tO4lbLBtlkfPQTDKfe4Xqv1ASWPpayPEig==}
     engines: {node: ^10 || ^12 || >=14}
@@ -3153,6 +3161,17 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.2.0
+    dev: false
+
+  /react-toastify/9.1.2_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-PBfzXO5jMGEtdYR5jxrORlNZZe/EuOkwvwKijMatsZZm8IZwLj01YvobeJYNjFcA6uy6CVrx2fzL9GWbhWPTDA==}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      clsx: 1.2.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /react-transition-group/4.4.5_biqbaboplfbrettd7655fr4n2y:
