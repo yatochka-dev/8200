@@ -1,7 +1,8 @@
 * {
-    overflow: hidden;
+  overflow: hidden;
 }
 
-a, * > a {
-    text-decoration: none !important;
+a,
+* > a {
+  text-decoration: none !important;
 }
