@@ -1,44 +1,20 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Grid,
-  Paper,
-  Slider,
-  Tooltip,
-  Typography,
-} from '@mui/material';
-import { type ChangeEvent, useMemo, useState } from 'react';
+import { Box, Button, Paper, Typography } from '@mui/material';
+import { type ChangeEvent, useCallback, useMemo, useState } from 'react';
 import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
-import ImageEditor from '@/components/picshare/ImageEditor';
-import SaveAsRoundedIcon from '@mui/icons-material/SaveAsRounded';
-import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
-import Pocketbase, { type Record } from 'pocketbase';
+import { type Record } from 'pocketbase';
+import dynamic from 'next/dynamic';
+import Loader from '@/components/Loader';
 
-const sliderMarks: { value: number; label: string }[] = [
-  {
-    value: 1,
-    label: '1',
-  },
-  {
-    value: 5,
-    label: '5',
-  },
-  {
-    value: 10,
-    label: '10',
-  },
-  {
-    value: 15,
-    label: '15',
-  },
-  {
-    value: 20,
-    label: '20',
-  },
-];
+const ImageEditor = dynamic(() => import('@/components/picshare/ImageEditor'), {
+  loading: () => <Loader height={300} width={300} />,
+});
 
-const pocketbase = new Pocketbase('http://127.0.0.1:8090');
+const ImageEditorToolbar = dynamic(
+  () => import('@/components/picshare/ImageEditorToolbar'),
+  {
+    loading: () => <Loader height={320} width={300} />,
+  }
+);
 
 export default function Picshare() {
   const [file, setFile] = useState<File | null>(null);
@@ -59,6 +35,9 @@ export default function Picshare() {
 
       const formData = new FormData();
       formData.append('image', blob);
+
+      const Pocketbase = (await import('pocketbase')).default;
+      const pocketbase = new Pocketbase('http://127.0.0.1:8090');
 
       const sharedImage = await pocketbase
         .collection('sharedImages')
@@ -102,6 +81,11 @@ export default function Picshare() {
 
   const hasFile = useMemo(() => file !== null, [file]);
 
+  const handleChange = useCallback(
+    (canvas: HTMLCanvasElement) => setCanvas(canvas),
+    []
+  );
+
   return (
     <Box component={'section'} sx={{}}>
       {hasFile ? (
@@ -124,7 +108,7 @@ export default function Picshare() {
             {file && (
               <ImageEditor
                 file={file}
-                onChange={(canvas) => setCanvas(canvas)}
+                onChange={handleChange}
                 color={color}
                 brushSize={brushSize}
               />
@@ -132,78 +116,19 @@ export default function Picshare() {
           </Paper>
 
           {/* Toolbar */}
-          <Grid
-            sx={{
-              width: '100%',
-              mt: 5,
+          <ImageEditorToolbar
+            backgroundColor={color}
+            onColorChange={(event) => setColor(event.target.value)}
+            brushSize={brushSize}
+            onBrushChange={(event, value, _activeThumb) => {
+              if (typeof value === 'number') {
+                setBrushSize(value);
+              }
             }}
-            container
-            spacing={2}
-          >
-            <Grid item>
-              <Button
-                component={'label'}
-                endIcon={
-                  <Box
-                    sx={{
-                      height: '20px',
-                      width: '20px',
-                      backgroundColor: color,
-                    }}
-                  />
-                }
-              >
-                Change Color
-                <input
-                  type="color"
-                  hidden
-                  onChange={(event) => setColor(event.target.value)}
-                />
-              </Button>
-            </Grid>
-
-            <Grid item>
-              <Box
-                sx={{
-                  width: '300px',
-                }}
-              >
-                <Tooltip title={'Brush Size'}>
-                  <Slider
-                    value={brushSize}
-                    onChange={(event, value, _activeThumb) => {
-                      if (typeof value === 'number') {
-                        setBrushSize(value);
-                      }
-                    }}
-                    marks={sliderMarks}
-                    min={1}
-                    max={20}
-                  />
-                </Tooltip>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Button
-                component={'label'}
-                variant={'outlined'}
-                endIcon={<FileUploadRoundedIcon />}
-              >
-                Upload new image
-                <input type="file" hidden onChange={handleUpload} />
-              </Button>
-            </Grid>
-            <Grid item>
-              <ButtonGroup variant={'contained'}>
-                <Button endIcon={<SaveAsRoundedIcon />} onClick={saveImage}>
-                  Save
-                </Button>
-                <Button endIcon={<ShareRoundedIcon />} onClick={shareImage}>
-                  Share
-                </Button>
-              </ButtonGroup>
-            </Grid>
-          </Grid>
+            onFileReUploadChange={handleUpload}
+            onSaveClick={saveImage}
+            onShareClick={shareImage}
+          />
         </Box>
       ) : (
         <Box

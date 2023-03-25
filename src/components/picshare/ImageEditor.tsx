@@ -1,4 +1,4 @@
-import React, { MouseEvent, useEffect, useRef, useState } from 'react';
+import React, { type MouseEvent, useEffect, useRef, useState } from 'react';
 import { Box } from '@mui/material';
 
 interface ImageEditorProps {
@@ -49,7 +49,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
     if (canvasRef.current) {
       onChange(canvasRef.current);
     }
-  }, [canvasRef.current]);
+  }, [canvasRef.current, onChange]);
 
   const startDrawing = (event: MouseEvent) => {
     setDrawing(true);
@@ -83,16 +83,6 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
 
     context.beginPath();
     context.moveTo(coordinates.x, coordinates.y);
-  };
-
-  const saveImage = () => {
-    if (canvasRef.current) {
-      const dataUrl = canvasRef.current.toDataURL();
-      const link = document.createElement('a');
-      link.href = dataUrl;
-      link.download = 'edited-image.png';
-      link.click();
-    }
   };
 
   return (

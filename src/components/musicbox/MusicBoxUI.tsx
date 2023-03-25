@@ -1,14 +1,14 @@
-import { MusicBoxType } from '@/hooks/useMusicBox';
-import { useMusicBoxSoundsType } from '@/hooks/useMusicBoxSounds';
-import { useMusicBoxButtonsType } from '@/hooks/useMusicBoxButtons';
-import { noteType } from '@/utils/types';
+import { type MusicBoxType } from '@/hooks/useMusicBox';
+import { type useMusicBoxSoundsType } from '@/hooks/useMusicBoxSounds';
+import { type useMusicBoxButtonsType } from '@/hooks/useMusicBoxButtons';
+import { type noteType } from '@/utils/types';
 import { Box, Button, ButtonGroup, Paper, Typography } from '@mui/material';
 import GraphicEqRoundedIcon from '@mui/icons-material/GraphicEqRounded';
 import StopIcon from '@mui/icons-material/Stop';
 import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
 import PlayCircleFilledWhiteRoundedIcon from '@mui/icons-material/PlayCircleFilledWhiteRounded';
 
-export function DefaultMusicBox({
+export default function DefaultMusicBox({
   musicBox,
   sounds,
   buttons,

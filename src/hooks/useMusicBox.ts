@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { type noteType, type RecordingType } from '@/utils/types';
-import { toast } from 'react-toastify';
 
 export interface MusicBoxActions {
   openListModal: () => void;
@@ -41,9 +40,7 @@ export default function useMusicBox() {
       closeListModal: () => setOpenRecordings(false),
       startRecording: () => {
         if (playing) {
-          toast("You can't record while playing", {
-            type: 'error',
-          });
+          return;
         }
 
         setRecording(true);
@@ -61,9 +58,6 @@ export default function useMusicBox() {
       },
       startPlaying: () => {
         if (recording) {
-          toast("You can't play while recording", {
-            type: 'error',
-          });
           return;
         }
         console.log('Start playing');

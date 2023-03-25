@@ -5,8 +5,6 @@ import {
   DialogContent,
   DialogTitle,
   Grid,
-  List,
-  ListItem,
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
@@ -19,7 +17,7 @@ import {
 interface EndAddingProps {
   open: boolean;
   onClose: () => void;
-  play: (recording: RecordingType) => void;
+  play: (recording: RecordingType) => Promise<void>;
 }
 
 export default function ListRecordings({
@@ -42,7 +40,7 @@ export default function ListRecordings({
 
   function handlePlay(recording: RecordingTypeVerbose) {
     console.log('Playing recording: ', recording);
-    play(recording.recording);
+    play(recording.recording).catch(console.error);
     onClose();
   }
 

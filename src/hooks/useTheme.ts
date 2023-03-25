@@ -9,7 +9,7 @@ const defaultOptions: ThemeOptions = {
       },
     },
     MuiCssBaseline: {
-      styleOverrides: (themeParam) => ({
+      styleOverrides: (_themeParam) => ({
         body: darkScrollbar(),
       }),
     },

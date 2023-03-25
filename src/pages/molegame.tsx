@@ -1,13 +1,25 @@
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Typography,
-} from '@mui/material';
-import GameBoard from '@/components/molegame/GameBoard';
+import { Box, Button, Typography } from '@mui/material';
 import { type MouseEvent, useCallback, useState } from 'react';
+import dynamic from 'next/dynamic';
+import Loader from '@/components/Loader';
+
+const GameBoard = dynamic(
+  () => {
+    return import('@/components/molegame/GameBoard');
+  },
+  {
+    loading: () => <Loader width={'100%'} height={400} />,
+  }
+);
+
+const EndGameDialog = dynamic(
+  () => {
+    return import('@/components/molegame/EndGameDialog');
+  },
+  {
+    loading: () => <>Loading...</>,
+  }
+);
 
 export default function Molegame() {
   const [playing, setPlaying] = useState(false);
@@ -58,48 +70,7 @@ export default function Molegame() {
       ) : (
         <Button onClick={handleStop}>Stop the Game!</Button>
       )}
-      <Dialog open={!!endGameDialog} onClose={onDialogClose}>
-        <DialogTitle
-          sx={{
-            textAlign: 'center',
-          }}
-        >
-          The game has ended!
-        </DialogTitle>
-
-        <DialogContent>
-          {endGameDialog ? (
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-              }}
-            >
-              <Typography variant={'h4'} align={'center'} gutterBottom>
-                Your score was: {endGameDialog.score}
-              </Typography>
-              <Typography variant={'h4'} align={'center'} gutterBottom>
-                Your time in game was: {endGameDialog.timeInGame}
-              </Typography>
-
-              <Button
-                onClick={onDialogClose}
-                variant={'outlined'}
-                color={'error'}
-                sx={{
-                  mt: 2,
-                }}
-              >
-                Close
-              </Button>
-            </Box>
-          ) : (
-            <Typography variant={'h4'} align={'center'} gutterBottom>
-              Loading...
-            </Typography>
-          )}
-        </DialogContent>
-      </Dialog>
+      <EndGameDialog endGameDialog={endGameDialog} onClose={onDialogClose} />
     </Box>
   );
 }

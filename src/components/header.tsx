@@ -1,4 +1,11 @@
-import { AppBar, Box, Button, Toolbar, useMediaQuery } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Button,
+  type Theme,
+  Toolbar,
+  useMediaQuery,
+} from '@mui/material';
 import { type AppType } from '@/utils/types';
 import { type NextRouter, useRouter } from 'next/router';
 import Link from 'next/link';
@@ -19,9 +26,11 @@ function getType(router: NextRouter, name: AppType) {
 export default function Header() {
   const router = useRouter();
 
-  const isSmOrLower = useMediaQuery((theme) => {
+  const check = (theme: Theme) => {
     return theme.breakpoints.down('sm');
-  });
+  };
+
+  const isSmOrLower = useMediaQuery(check);
 
   const buttonSize = useMemo(() => {
     if (isSmOrLower) {

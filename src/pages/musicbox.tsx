@@ -1,6 +1,4 @@
 import { Box, Paper, Typography } from '@mui/material';
-import EndAdding from '@/components/musicbox/endAdding';
-import ListRecordings from '@/components/musicbox/listRecordings';
 import {
   type ListOfRecordingsType,
   type noteType,
@@ -11,21 +9,51 @@ import {
 import useMusicBox from '@/hooks/useMusicBox';
 import useMusicBoxSounds from '@/hooks/useMusicBoxSounds';
 import useMusicBoxButtons from '@/hooks/useMusicBoxButtons';
-import { SoundComponents } from '@/components/musicbox/soundComponents';
 import { useOrientation } from '@/hooks/useOrientantion';
-import { DefaultMusicBox } from '@/components/musicbox/MusicBoxUI';
 import ScreenRotationRoundedIcon from '@mui/icons-material/ScreenRotationRounded';
+import dynamic from 'next/dynamic';
+import Loader from '@/components/Loader';
+
+const SoundComponents = dynamic(
+  () => {
+    return import('@/components/musicbox/soundComponents');
+  },
+  {
+    loading: () => <></>,
+  }
+);
+
+const DefaultMusicBox = dynamic(
+  () => {
+    return import('@/components/musicbox/MusicBoxUI');
+  },
+  {
+    loading: () => <Loader width={'100%'} height={300} />,
+  }
+);
+
+const EndAdding = dynamic(
+  () => {
+    return import('@/components/musicbox/endAdding');
+  },
+  {
+    loading: () => <>Loading...</>,
+  }
+);
+
+const ListRecordings = dynamic(
+  () => {
+    return import('@/components/musicbox/listRecordings');
+  },
+  {
+    loading: () => <>Loading...</>,
+  }
+);
 
 export default function Musicbox() {
   const musicBox = useMusicBox();
-  const {
-    recording,
-    playing,
-    saving,
-    currentRecording,
-    openRecordings,
-    actions,
-  } = musicBox;
+  const { recording, saving, currentRecording, openRecordings, actions } =
+    musicBox;
 
   const sounds = useMusicBoxSounds();
   const buttons = useMusicBoxButtons();
@@ -49,7 +77,7 @@ export default function Musicbox() {
     }
   };
 
-  async function playFromRecording(recording: RecordingType) {
+  async function playFromRecording(recording: RecordingType): Promise<void> {
     actions.startPlaying();
     let currentNoteNumber = 0;
 

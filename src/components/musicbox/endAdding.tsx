@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 import useField from '@/hooks/useField';
-import { ListOfRecordingsType, RecordingNameType } from '@/utils/types';
+import type { ListOfRecordingsType, RecordingNameType } from '@/utils/types';
 
 interface EndAddingProps {
   open: boolean;

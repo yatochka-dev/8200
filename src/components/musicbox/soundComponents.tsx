@@ -1,7 +1,11 @@
 import { type useMusicBoxSoundsType } from '@/hooks/useMusicBoxSounds';
 import { Portal } from '@mui/material';
 
-export function SoundComponents({ sounds }: { sounds: useMusicBoxSoundsType }) {
+export default function SoundComponents({
+  sounds,
+}: {
+  sounds: useMusicBoxSoundsType;
+}) {
   return (
     <Portal>
       <div id={'music-notes'}>
