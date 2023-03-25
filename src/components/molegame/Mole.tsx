@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React, { MouseEvent, useCallback, useEffect, useState } from "react";
+import React, { type MouseEvent, useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 interface MoleProps {
@@ -18,7 +18,7 @@ const Mole: React.FC<MoleProps> = ({ position, onClick }) => {
   }, [position]);
 
   const handleMoleClick = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
+    (_: MouseEvent<HTMLDivElement>) => {
       if (!isWhacked) {
         setIsWhacked(true);
         onClick();
