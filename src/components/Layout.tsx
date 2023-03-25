@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import React, { type ReactNode } from "react";
+import { motion } from 'framer-motion';
+import React, { type ReactNode } from 'react';
 
 const Layout = ({ children }: { children: ReactNode }) => (
   <motion.div
@@ -7,7 +7,7 @@ const Layout = ({ children }: { children: ReactNode }) => (
     animate={{ opacity: 1 }}
     exit={{ opacity: 0 }}
     transition={{
-      type: "spring",
+      type: 'spring',
       stiffness: 260,
       damping: 20,
       duration: 0.2,

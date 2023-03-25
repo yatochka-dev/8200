@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { type noteType } from "@/utils/types";
+import React, { useRef } from 'react';
+import { type noteType } from '@/utils/types';
 export type useMusicBoxButtonsType = {
   [key in noteType]: React.MutableRefObject<HTMLButtonElement | null>;
 };

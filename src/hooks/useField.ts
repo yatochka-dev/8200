@@ -1,4 +1,4 @@
-import { type ChangeEvent, useCallback, useEffect, useState } from "react";
+import { type ChangeEvent, useCallback, useEffect, useState } from 'react';
 
 export default function useField<T>(
   initialValue: T,
@@ -15,7 +15,7 @@ export default function useField<T>(
   useEffect(() => {
     const checkResult = check && check(value);
 
-    if (typeof checkResult === "string") {
+    if (typeof checkResult === 'string') {
       setError(checkResult);
     } else {
       setError(null);

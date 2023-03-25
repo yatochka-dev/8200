@@ -5,9 +5,9 @@ import {
   DialogContent,
   DialogTitle,
   Typography,
-} from "@mui/material";
-import GameBoard from "@/components/molegame/GameBoard";
-import { type MouseEvent, useCallback, useState } from "react";
+} from '@mui/material';
+import GameBoard from '@/components/molegame/GameBoard';
+import { type MouseEvent, useCallback, useState } from 'react';
 
 export default function Molegame() {
   const [playing, setPlaying] = useState(false);
@@ -38,18 +38,18 @@ export default function Molegame() {
   return (
     <Box
       sx={{
-        height: "100vh",
-        display: "flex",
-        flexDirection: "column",
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
-      <Typography variant="h2" align="center" gutterBottom>
+      <Typography variant={'h2'} align={'center'} gutterBottom>
         Mole Game
       </Typography>
       {playing ? (
         <GameBoard handleGameEnd={handleGameEnd} />
       ) : (
-        <Typography variant="h4" align="center" gutterBottom>
+        <Typography variant={'h4'} align={'center'} gutterBottom>
           Click the button below to start the game
         </Typography>
       )}
@@ -61,7 +61,7 @@ export default function Molegame() {
       <Dialog open={!!endGameDialog} onClose={onDialogClose}>
         <DialogTitle
           sx={{
-            textAlign: "center",
+            textAlign: 'center',
           }}
         >
           The game has ended!
@@ -71,21 +71,21 @@ export default function Molegame() {
           {endGameDialog ? (
             <Box
               sx={{
-                display: "flex",
-                flexDirection: "column",
+                display: 'flex',
+                flexDirection: 'column',
               }}
             >
-              <Typography variant="h4" align="center" gutterBottom>
+              <Typography variant={'h4'} align={'center'} gutterBottom>
                 Your score was: {endGameDialog.score}
               </Typography>
-              <Typography variant="h4" align="center" gutterBottom>
+              <Typography variant={'h4'} align={'center'} gutterBottom>
                 Your time in game was: {endGameDialog.timeInGame}
               </Typography>
 
               <Button
                 onClick={onDialogClose}
-                variant={"outlined"}
-                color={"error"}
+                variant={'outlined'}
+                color={'error'}
                 sx={{
                   mt: 2,
                 }}
@@ -94,7 +94,7 @@ export default function Molegame() {
               </Button>
             </Box>
           ) : (
-            <Typography variant="h4" align="center" gutterBottom>
+            <Typography variant={'h4'} align={'center'} gutterBottom>
               Loading...
             </Typography>
           )}

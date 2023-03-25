@@ -1,6 +1,6 @@
-import type React from "react";
-import { useRef } from "react";
-import { type noteType } from "@/utils/types";
+import type React from 'react';
+import { useRef } from 'react';
+import { type noteType } from '@/utils/types';
 
 export type useMusicBoxSoundsType = {
   [key in noteType]: React.MutableRefObject<HTMLAudioElement | null>;

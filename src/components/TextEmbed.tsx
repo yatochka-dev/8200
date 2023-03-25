@@ -1,4 +1,4 @@
-import { Paper, Typography } from "@mui/material";
+import { Paper, Typography } from '@mui/material';
 
 export function TextEmbed({ text }: { text: string }) {
   return (
@@ -6,9 +6,9 @@ export function TextEmbed({ text }: { text: string }) {
       sx={{
         width: 200,
         height: 200,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
       <Typography>{text}</Typography>

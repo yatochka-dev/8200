@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Box, Typography } from "@mui/material";
-import Mole from "@/components/molegame/Mole";
-import { randomInteger } from "@/utils";
+import React, { useEffect, useRef, useState } from 'react';
+import { Box, Typography } from '@mui/material';
+import Mole from '@/components/molegame/Mole';
+import { randomInteger } from '@/utils';
 
 type MoleType = {
   position: {
@@ -107,9 +107,9 @@ const GameBoard: React.FC<GameBoardProps> = ({ handleGameEnd }) => {
     <Box>
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}
       >
         <Typography variant="h4">Score: {score}</Typography>
@@ -118,9 +118,9 @@ const GameBoard: React.FC<GameBoardProps> = ({ handleGameEnd }) => {
       <Box
         sx={{
           backgroundImage: `url("/grass.jpg")`,
-          width: "100%",
+          width: '100%',
           height: 600,
-          position: "relative",
+          position: 'relative',
           borderRadius: 1,
         }}
         ref={fieldRef}

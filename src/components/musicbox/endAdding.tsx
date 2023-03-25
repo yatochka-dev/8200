@@ -9,9 +9,9 @@ import {
   DialogTitle,
   TextField,
   Typography,
-} from "@mui/material";
-import useField from "@/hooks/useField";
-import { ListOfRecordingsType, RecordingNameType } from "@/utils/types";
+} from '@mui/material';
+import useField from '@/hooks/useField';
+import { ListOfRecordingsType, RecordingNameType } from '@/utils/types';
 
 interface EndAddingProps {
   open: boolean;
@@ -29,23 +29,23 @@ export default function EndAdding({
   save,
 }: EndAddingProps) {
   const { value, register } = useField<RecordingNameType>(
-    "",
-    "Enter the name of your new recording.",
+    '',
+    'Enter the name of your new recording.',
     (value) => {
       // Check if the recording name is empty
       if (value.length <= 0) {
-        return "Recording name cannot be empty";
+        return 'Recording name cannot be empty';
         // Check if the recording name is too long
       } else if (value.length > 20) {
-        return "Recording name cannot be longer than 20 characters";
+        return 'Recording name cannot be longer than 20 characters';
         // Check if the recording name already exists
       } else {
-        const raw = localStorage.getItem("recordings");
+        const raw = localStorage.getItem('recordings');
         if (raw) {
           const recordings = JSON.parse(raw) as ListOfRecordingsType;
           for (const recording of recordings) {
             if (recording.name === value) {
-              return "Recording name already exists";
+              return 'Recording name already exists';
             }
           }
         }
@@ -66,16 +66,16 @@ export default function EndAdding({
         </Typography>
         <TextField
           {...register}
-          variant={"filled"}
-          label={"Recording Name"}
+          variant={'filled'}
+          label={'Recording Name'}
           sx={{
-            width: "100%",
+            width: '100%',
             mb: 4,
           }}
           required
         />
 
-        <Accordion variant={"outlined"}>
+        <Accordion variant={'outlined'}>
           <AccordionSummary>
             <Typography>Preview notes</Typography>
           </AccordionSummary>
@@ -90,8 +90,8 @@ export default function EndAdding({
       </DialogContent>
       {recordingEmpty && (
         <Typography
-          variant={"caption"}
-          color={"error"}
+          variant={'caption'}
+          color={'error'}
           sx={{
             px: 3,
           }}
@@ -101,8 +101,8 @@ export default function EndAdding({
       )}
       <DialogActions
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
+          display: 'flex',
+          justifyContent: 'space-between',
           px: 3,
           pb: 3,
         }}
@@ -117,7 +117,7 @@ export default function EndAdding({
           Save
         </Button>
         <Button
-          color={"error"}
+          color={'error'}
           onClick={() => {
             cancel();
             onClose();

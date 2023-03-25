@@ -1,5 +1,5 @@
-import { Button, Paper } from "@mui/material";
-import { type NextPage } from "next";
+import { Button, Paper } from '@mui/material';
+import { type NextPage } from 'next';
 
 const Home: NextPage = () => {
   return (

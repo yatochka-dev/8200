@@ -1,5 +1,5 @@
-import React, { MouseEvent, useEffect, useRef, useState } from "react";
-import { Box } from "@mui/material";
+import React, { MouseEvent, useEffect, useRef, useState } from 'react';
+import { Box } from '@mui/material';
 
 interface ImageEditorProps {
   file: File;
@@ -25,7 +25,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
 
   useEffect(() => {
     if (canvasRef.current) {
-      const canvasContext = canvasRef.current.getContext("2d");
+      const canvasContext = canvasRef.current.getContext('2d');
       setContext(canvasContext);
 
       const reader = new FileReader();
@@ -75,7 +75,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
     };
 
     context.lineWidth = brushSize;
-    context.lineCap = "round";
+    context.lineCap = 'round';
     context.strokeStyle = color;
 
     context.lineTo(coordinates.x, coordinates.y);
@@ -88,9 +88,9 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
   const saveImage = () => {
     if (canvasRef.current) {
       const dataUrl = canvasRef.current.toDataURL();
-      const link = document.createElement("a");
+      const link = document.createElement('a');
       link.href = dataUrl;
-      link.download = "edited-image.png";
+      link.download = 'edited-image.png';
       link.click();
     }
   };
@@ -98,9 +98,9 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
   return (
     <Box
       sx={{
-        maxWidth: "100%",
-        aspectRatio: "16 / 9",
-        overflowX: "auto",
+        maxWidth: '100%',
+        aspectRatio: '16 / 9',
+        overflowX: 'auto',
       }}
     >
       <canvas
@@ -109,7 +109,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
         onMouseUp={finishDrawing}
         onMouseOut={finishDrawing}
         onMouseMove={draw}
-        style={{ aspectRatio: "16 / 9" }}
+        style={{ aspectRatio: '16 / 9' }}
       />
     </Box>
   );

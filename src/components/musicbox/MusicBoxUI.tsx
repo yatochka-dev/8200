@@ -1,12 +1,12 @@
-import { MusicBoxType } from "@/hooks/useMusicBox";
-import { useMusicBoxSoundsType } from "@/hooks/useMusicBoxSounds";
-import { useMusicBoxButtonsType } from "@/hooks/useMusicBoxButtons";
-import { noteType } from "@/utils/types";
-import { Box, Button, ButtonGroup, Paper, Typography } from "@mui/material";
-import GraphicEqRoundedIcon from "@mui/icons-material/GraphicEqRounded";
-import StopIcon from "@mui/icons-material/Stop";
-import FiberManualRecordRoundedIcon from "@mui/icons-material/FiberManualRecordRounded";
-import PlayCircleFilledWhiteRoundedIcon from "@mui/icons-material/PlayCircleFilledWhiteRounded";
+import { MusicBoxType } from '@/hooks/useMusicBox';
+import { useMusicBoxSoundsType } from '@/hooks/useMusicBoxSounds';
+import { useMusicBoxButtonsType } from '@/hooks/useMusicBoxButtons';
+import { noteType } from '@/utils/types';
+import { Box, Button, ButtonGroup, Paper, Typography } from '@mui/material';
+import GraphicEqRoundedIcon from '@mui/icons-material/GraphicEqRounded';
+import StopIcon from '@mui/icons-material/Stop';
+import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
+import PlayCircleFilledWhiteRoundedIcon from '@mui/icons-material/PlayCircleFilledWhiteRounded';
 
 export function DefaultMusicBox({
   musicBox,
@@ -23,11 +23,11 @@ export function DefaultMusicBox({
   return (
     <Paper
       sx={{
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
         p: 4,
         my: {
           md: 10,
@@ -35,11 +35,11 @@ export function DefaultMusicBox({
           xs: 6,
         },
       }}
-      variant={"outlined"}
+      variant={'outlined'}
     >
       <Box>
         <Typography
-          variant={"h4"}
+          variant={'h4'}
           sx={{
             mb: 4,
           }}
@@ -49,14 +49,14 @@ export function DefaultMusicBox({
       </Box>
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          width: "100%",
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%',
           mb: 4,
         }}
       >
         <Button
-          variant={"outlined"}
+          variant={'outlined'}
           endIcon={<GraphicEqRoundedIcon />}
           onClick={musicBox.actions.openListModal}
           disabled={disabled}
@@ -67,23 +67,23 @@ export function DefaultMusicBox({
           <Button
             onClick={musicBox.actions.stopPlaying}
             endIcon={<StopIcon />}
-            color={"error"}
+            color={'error'}
           >
             Stop playing
           </Button>
         )}
         {musicBox.recording ? (
           <Button
-            variant={"contained"}
+            variant={'contained'}
             endIcon={<FiberManualRecordRoundedIcon />}
-            color={"error"}
+            color={'error'}
             onClick={musicBox.actions.stopRecording}
           >
             Finish Recording
           </Button>
         ) : (
           <Button
-            variant={"outlined"}
+            variant={'outlined'}
             endIcon={<PlayCircleFilledWhiteRoundedIcon />}
             onClick={musicBox.actions.startRecording}
             disabled={disabled}
@@ -93,13 +93,13 @@ export function DefaultMusicBox({
         )}
       </Box>
       <ButtonGroup
-        variant={"contained"}
+        variant={'contained'}
         sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          flexDirection: "row",
-          width: "100%",
-          "& > *": {
+          display: 'flex',
+          flexWrap: 'wrap',
+          flexDirection: 'row',
+          width: '100%',
+          '& > *': {
             height: 200,
             flexGrow: 1,
           },
@@ -114,15 +114,15 @@ export function DefaultMusicBox({
               }}
               disableElevation
               sx={{
-                borderRight: "1px black solid !important",
-                backgroundColor: "white",
-                "&:hover": {
-                  backgroundColor: "#e0e0e0",
+                borderRight: '1px black solid !important',
+                backgroundColor: 'white',
+                '&:hover': {
+                  backgroundColor: '#e0e0e0',
                 },
               }}
               ref={buttons[sound as noteType]}
             >
-              {`${sound === "hDo" ? "Do" : sound}`.toLowerCase()}
+              {`${sound === 'hDo' ? 'Do' : sound}`.toLowerCase()}
             </Button>
           );
         })}

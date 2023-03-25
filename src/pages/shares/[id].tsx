@@ -1,14 +1,14 @@
-import { type GetServerSideProps } from "next";
-import Pocketbase, { type Record } from "pocketbase";
+import { type GetServerSideProps } from 'next';
+import Pocketbase, { type Record } from 'pocketbase';
 
-const pocketbase = new Pocketbase("http://127.0.0.1:8090");
+const pocketbase = new Pocketbase('http://127.0.0.1:8090');
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
   try {
-    if (typeof id === "string") {
+    if (typeof id === 'string') {
       const instance = await pocketbase
-        .collection("sharedImages")
+        .collection('sharedImages')
         .getOne<{ image: string } & Record>(id);
       const url = pocketbase.getFileUrl(instance, instance.image, {});
 
@@ -22,7 +22,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       return {
         redirect: {
           permanent: true,
-          destination: "/",
+          destination: '/',
         },
       };
     }
@@ -30,7 +30,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
       redirect: {
         permanent: true,
-        destination: "/",
+        destination: '/',
       },
     };
   }

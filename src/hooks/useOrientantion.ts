@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-export type OrientationType = "portrait" | "landscape";
+export type OrientationType = 'portrait' | 'landscape';
 
 // landscape is default, like for computers
 export const useOrientation = () => {
-  const [orientation, setOrientation] = useState<OrientationType>("landscape");
+  const [orientation, setOrientation] = useState<OrientationType>('landscape');
 
   useEffect(() => {
     const handleOrientation = () => {
@@ -16,15 +16,15 @@ export const useOrientation = () => {
 
       const raw = screen.orientation.type;
 
-      if (raw.includes("landscape")) {
-        setOrientation("landscape");
+      if (raw.includes('landscape')) {
+        setOrientation('landscape');
       } else {
-        setOrientation("portrait");
+        setOrientation('portrait');
       }
     };
 
-    window.addEventListener("resize", handleOrientation);
-    return () => window.removeEventListener("resize", handleOrientation);
+    window.addEventListener('resize', handleOrientation);
+    return () => window.removeEventListener('resize', handleOrientation);
   }, []);
 
   return orientation;

@@ -1,8 +1,8 @@
-import { AppBar, Box, Button, Toolbar, useMediaQuery } from "@mui/material";
-import { type AppType } from "@/utils/types";
-import { type NextRouter, useRouter } from "next/router";
-import Link from "next/link";
-import { useMemo } from "react";
+import { AppBar, Box, Button, Toolbar, useMediaQuery } from '@mui/material';
+import { type AppType } from '@/utils/types';
+import { type NextRouter, useRouter } from 'next/router';
+import Link from 'next/link';
+import { useMemo } from 'react';
 
 function isActive(router: NextRouter, name: AppType) {
   return router.pathname === `/${name}`;
@@ -10,9 +10,9 @@ function isActive(router: NextRouter, name: AppType) {
 
 function getType(router: NextRouter, name: AppType) {
   if (isActive(router, name)) {
-    return "contained";
+    return 'contained';
   } else {
-    return "outlined";
+    return 'outlined';
   }
 }
 
@@ -20,14 +20,14 @@ export default function Header() {
   const router = useRouter();
 
   const isSmOrLower = useMediaQuery((theme) => {
-    return theme.breakpoints.down("sm");
+    return theme.breakpoints.down('sm');
   });
 
   const buttonSize = useMemo(() => {
     if (isSmOrLower) {
-      return "small";
+      return 'small';
     } else {
-      return "medium";
+      return 'medium';
     }
   }, [isSmOrLower]);
 
@@ -36,32 +36,32 @@ export default function Header() {
       <Toolbar>
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "space-between",
+            display: 'flex',
+            justifyContent: 'space-between',
             width: {
-              xl: "50svw",
-              lg: "50svw",
-              md: "60svw",
-              sm: "90svw",
-              xs: "100svw",
+              xl: '50svw',
+              lg: '50svw',
+              md: '60svw',
+              sm: '90svw',
+              xs: '100svw',
             },
-            mx: "auto",
+            mx: 'auto',
             gap: 2,
           }}
         >
-          <Link href={"/picshare"} style={{ textDecoration: "none" }}>
-            <Button variant={getType(router, "picshare")} size={buttonSize}>
+          <Link href={'/picshare'} style={{ textDecoration: 'none' }}>
+            <Button variant={getType(router, 'picshare')} size={buttonSize}>
               PicShare
             </Button>
           </Link>
-          <Link href={"/musicbox"} style={{ textDecoration: "none" }}>
-            <Button variant={getType(router, "musicbox")} size={buttonSize}>
+          <Link href={'/musicbox'} style={{ textDecoration: 'none' }}>
+            <Button variant={getType(router, 'musicbox')} size={buttonSize}>
               MusicBox
             </Button>
           </Link>
 
-          <Link href={"/molegame"} style={{ textDecoration: "none" }}>
-            <Button variant={getType(router, "molegame")} size={buttonSize}>
+          <Link href={'/molegame'} style={{ textDecoration: 'none' }}>
+            <Button variant={getType(router, 'molegame')} size={buttonSize}>
               MoleGame
             </Button>
           </Link>

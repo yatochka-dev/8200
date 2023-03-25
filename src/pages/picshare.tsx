@@ -7,43 +7,43 @@ import {
   Slider,
   Tooltip,
   Typography,
-} from "@mui/material";
-import { type ChangeEvent, useMemo, useState } from "react";
-import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
-import ImageEditor from "@/components/picshare/ImageEditor";
-import SaveAsRoundedIcon from "@mui/icons-material/SaveAsRounded";
-import ShareRoundedIcon from "@mui/icons-material/ShareRounded";
-import Pocketbase, { type Record } from "pocketbase";
+} from '@mui/material';
+import { type ChangeEvent, useMemo, useState } from 'react';
+import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
+import ImageEditor from '@/components/picshare/ImageEditor';
+import SaveAsRoundedIcon from '@mui/icons-material/SaveAsRounded';
+import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
+import Pocketbase, { type Record } from 'pocketbase';
 
 const sliderMarks: { value: number; label: string }[] = [
   {
     value: 1,
-    label: "1",
+    label: '1',
   },
   {
     value: 5,
-    label: "5",
+    label: '5',
   },
   {
     value: 10,
-    label: "10",
+    label: '10',
   },
   {
     value: 15,
-    label: "15",
+    label: '15',
   },
   {
     value: 20,
-    label: "20",
+    label: '20',
   },
 ];
 
-const pocketbase = new Pocketbase("http://127.0.0.1:8090");
+const pocketbase = new Pocketbase('http://127.0.0.1:8090');
 
 export default function Picshare() {
   const [file, setFile] = useState<File | null>(null);
   const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null);
-  const [color, setColor] = useState("#000000");
+  const [color, setColor] = useState('#000000');
   const [brushSize, setBrushSize] = useState(5);
 
   function shareImage() {
@@ -58,21 +58,21 @@ export default function Picshare() {
       }
 
       const formData = new FormData();
-      formData.append("image", blob);
+      formData.append('image', blob);
 
       const sharedImage = await pocketbase
-        .collection("sharedImages")
+        .collection('sharedImages')
         .create<{ image: string } & Record>(formData);
 
       const currentDomainAndHttp = window.location.href
-        .split("/")
+        .split('/')
         .slice(0, 3)
-        .join("/");
+        .join('/');
       const url = `${currentDomainAndHttp}/shares/${sharedImage.id}`;
 
       const shareData = {
-        title: "My edited image",
-        text: "Check out my edited image!",
+        title: 'My edited image',
+        text: 'Check out my edited image!',
         url: url,
       };
 
@@ -93,9 +93,9 @@ export default function Picshare() {
   const saveImage = () => {
     if (canvas) {
       const dataUrl = canvas.toDataURL();
-      const link = document.createElement("a");
+      const link = document.createElement('a');
       link.href = dataUrl;
-      link.download = "edited-image.png";
+      link.download = 'edited-image.png';
       link.click();
     }
   };
@@ -103,23 +103,23 @@ export default function Picshare() {
   const hasFile = useMemo(() => file !== null, [file]);
 
   return (
-    <Box component={"section"} sx={{}}>
+    <Box component={'section'} sx={{}}>
       {hasFile ? (
         <Box
           sx={{
-            width: "100%",
-            height: "calc(100svh - 64px)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
+            width: '100%',
+            height: 'calc(100svh - 64px)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
           }}
         >
           <Paper
             sx={{
-              backgroundColor: "transparent",
+              backgroundColor: 'transparent',
             }}
-            variant={"outlined"}
+            variant={'outlined'}
           >
             {file && (
               <ImageEditor
@@ -134,7 +134,7 @@ export default function Picshare() {
           {/* Toolbar */}
           <Grid
             sx={{
-              width: "100%",
+              width: '100%',
               mt: 5,
             }}
             container
@@ -142,12 +142,12 @@ export default function Picshare() {
           >
             <Grid item>
               <Button
-                component={"label"}
+                component={'label'}
                 endIcon={
                   <Box
                     sx={{
-                      height: "20px",
-                      width: "20px",
+                      height: '20px',
+                      width: '20px',
                       backgroundColor: color,
                     }}
                   />
@@ -165,14 +165,14 @@ export default function Picshare() {
             <Grid item>
               <Box
                 sx={{
-                  width: "300px",
+                  width: '300px',
                 }}
               >
-                <Tooltip title={"Brush Size"}>
+                <Tooltip title={'Brush Size'}>
                   <Slider
                     value={brushSize}
                     onChange={(event, value, _activeThumb) => {
-                      if (typeof value === "number") {
+                      if (typeof value === 'number') {
                         setBrushSize(value);
                       }
                     }}
@@ -185,8 +185,8 @@ export default function Picshare() {
             </Grid>
             <Grid item>
               <Button
-                component={"label"}
-                variant={"outlined"}
+                component={'label'}
+                variant={'outlined'}
                 endIcon={<FileUploadRoundedIcon />}
               >
                 Upload new image
@@ -194,7 +194,7 @@ export default function Picshare() {
               </Button>
             </Grid>
             <Grid item>
-              <ButtonGroup variant={"contained"}>
+              <ButtonGroup variant={'contained'}>
                 <Button endIcon={<SaveAsRoundedIcon />} onClick={saveImage}>
                   Save
                 </Button>
@@ -208,33 +208,33 @@ export default function Picshare() {
       ) : (
         <Box
           sx={{
-            width: "100%",
-            height: "calc(100svh - 64px)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            width: '100%',
+            height: 'calc(100svh - 64px)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <Paper
             sx={{
-              width: "100%",
-              height: "calc(50svh - 64px)",
+              width: '100%',
+              height: 'calc(50svh - 64px)',
               mt: -5,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
               gap: 2,
             }}
-            variant={"outlined"}
+            variant={'outlined'}
           >
-            <Typography variant={"h5"} color={"text.secondary"}>
+            <Typography variant={'h5'} color={'text.secondary'}>
               There&apos;s no image to edit.
             </Typography>
 
             <Button
-              component={"label"}
-              variant={"outlined"}
+              component={'label'}
+              variant={'outlined'}
               endIcon={<FileUploadRoundedIcon />}
             >
               Upload Image
