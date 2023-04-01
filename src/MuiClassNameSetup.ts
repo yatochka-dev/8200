@@ -3,6 +3,6 @@ import { unstable_ClassNameGenerator as ClassNameGenerator } from '@mui/material
 ClassNameGenerator.configure(
   // Do something with the componentName
   (componentName) => {
-    return componentName.replace('Mui', 'yatochka-').toLowerCase();
+    return componentName.replace('Mui', '').toLowerCase();
   }
 );

@@ -14,3 +14,7 @@ export const stringToColour = function (str: string) {
 export const randomInteger = (a: number, b: number) => {
   return Math.floor(Math.random() * (b - a + 1)) + a;
 };
+
+export const calc = (str: string) => {
+  return `calc(${str})`;
+};

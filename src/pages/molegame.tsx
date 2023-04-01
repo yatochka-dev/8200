@@ -1,7 +1,10 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Paper, Typography } from '@mui/material';
 import { type MouseEvent, useCallback, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Loader from '@/components/Loader';
+import EndGameDialog from '@/components/molegame/EndGameDialog';
+import { useOrientation } from '@/hooks/useOrientantion';
+import ScreenRotationRoundedIcon from '@mui/icons-material/ScreenRotationRounded';
 
 const GameBoard = dynamic(
   () => {
@@ -12,17 +15,11 @@ const GameBoard = dynamic(
   }
 );
 
-const EndGameDialog = dynamic(
-  () => {
-    return import('@/components/molegame/EndGameDialog');
-  },
-  {
-    loading: () => <>Loading...</>,
-  }
-);
-
 export default function Molegame() {
   const [playing, setPlaying] = useState(false);
+  const orientation = useOrientation();
+  const showUI = orientation === 'landscape';
+
   const [endGameDialog, setEndGameDialog] = useState<{
     score: number;
     timeInGame: number;
@@ -48,29 +45,70 @@ export default function Molegame() {
   }, []);
 
   return (
-    <Box
-      sx={{
-        height: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      <Typography variant={'h2'} align={'center'} gutterBottom>
-        Mole Game
-      </Typography>
-      {playing ? (
-        <GameBoard handleGameEnd={handleGameEnd} />
+    <>
+      {showUI ? (
+        <Box
+          sx={{
+            height: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <Typography variant={'h2'} align={'center'} gutterBottom>
+            Mole Game
+          </Typography>
+          {playing ? (
+            <GameBoard handleGameEnd={handleGameEnd} />
+          ) : (
+            <Typography variant={'h4'} align={'center'} gutterBottom>
+              Click the button below to start the game
+            </Typography>
+          )}
+          {!playing ? (
+            <Button onClick={handleStart}>Start the Game!</Button>
+          ) : (
+            <Button onClick={handleStop}>Stop the Game!</Button>
+          )}
+          <EndGameDialog
+            endGameDialog={endGameDialog}
+            onClose={onDialogClose}
+          />
+        </Box>
       ) : (
-        <Typography variant={'h4'} align={'center'} gutterBottom>
-          Click the button below to start the game
-        </Typography>
+        <>
+          <Paper
+            sx={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              p: 4,
+            }}
+            variant={'outlined'}
+          >
+            <Box>
+              <Typography variant={'caption'} color={'text.secondary'}>
+                Rotate your phone to landscape position
+              </Typography>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  mt: 2,
+                }}
+              >
+                <ScreenRotationRoundedIcon
+                  sx={{
+                    fontSize: '5rem',
+                  }}
+                />
+              </Box>
+            </Box>
+          </Paper>
+        </>
       )}
-      {!playing ? (
-        <Button onClick={handleStart}>Start the Game!</Button>
-      ) : (
-        <Button onClick={handleStop}>Stop the Game!</Button>
-      )}
-      <EndGameDialog endGameDialog={endGameDialog} onClose={onDialogClose} />
-    </Box>
+    </>
   );
 }

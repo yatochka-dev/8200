@@ -1,4 +1,4 @@
-import React, { type MouseEvent, useEffect, useRef, useState } from 'react';
+import React, { MouseEvent, useEffect, useRef, useState } from 'react';
 import { Box } from '@mui/material';
 
 interface ImageEditorProps {
@@ -51,9 +51,9 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
     }
   }, [canvasRef.current, onChange]);
 
-  const startDrawing = (event: MouseEvent) => {
+  const startDrawing = (clientX: number, clientY: number) => {
     setDrawing(true);
-    draw(event);
+    draw(clientX, clientY);
   };
 
   const finishDrawing = () => {
@@ -63,15 +63,15 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
     }
   };
 
-  const draw = (event: MouseEvent) => {
-    if (!drawing || !context) return;
+  const draw = (clientX: number, clientY: number) => {
+    if (!drawing || !context || !canvasRef.current) return;
 
-    const canvasPosition = canvasRef.current?.getBoundingClientRect();
-    if (!canvasPosition) return;
+    const canvasPosition = canvasRef.current.getBoundingClientRect();
+    const scaleFactor = canvasRef.current.width / canvasPosition.width;
 
     const coordinates: DrawCoordinates = {
-      x: event.clientX - canvasPosition.left,
-      y: event.clientY - canvasPosition.top,
+      x: (clientX - canvasPosition.left) * scaleFactor,
+      y: (clientY - canvasPosition.top) * scaleFactor,
     };
 
     context.lineWidth = brushSize;
@@ -85,21 +85,39 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
     context.moveTo(coordinates.x, coordinates.y);
   };
 
+  const handleMouseDown = (event: MouseEvent) => {
+    startDrawing(event.clientX, event.clientY);
+  };
+
+  const handleTouchStart = (event: React.TouchEvent) => {
+    const touch = event.touches[0];
+    if (!touch) return;
+    startDrawing(touch.clientX, touch.clientY);
+  };
+
   return (
     <Box
       sx={{
         maxWidth: '100%',
-        aspectRatio: '16 / 9',
-        overflowX: 'auto',
+        maxHeight: '100%',
       }}
     >
       <canvas
         ref={canvasRef}
-        onMouseDown={startDrawing}
+        onMouseDown={handleMouseDown}
         onMouseUp={finishDrawing}
         onMouseOut={finishDrawing}
-        onMouseMove={draw}
-        style={{ aspectRatio: '16 / 9' }}
+        onMouseMove={(e) => draw(e.clientX, e.clientY)}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={finishDrawing}
+        onTouchCancel={finishDrawing}
+        onTouchMove={(e) => {
+          e.preventDefault();
+          const touch = e.touches[0];
+          if (!touch) return;
+          draw(touch.clientX, touch.clientY);
+        }}
+        style={{ maxWidth: '100%', maxHeight: '100%' }}
       />
     </Box>
   );

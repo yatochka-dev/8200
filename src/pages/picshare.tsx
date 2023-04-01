@@ -102,6 +102,11 @@ export default function Picshare() {
           <Paper
             sx={{
               backgroundColor: 'transparent',
+              minWidth: '100%',
+              maxWidth: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
             }}
             variant={'outlined'}
           >

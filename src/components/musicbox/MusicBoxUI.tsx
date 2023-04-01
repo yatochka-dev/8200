@@ -7,6 +7,7 @@ import GraphicEqRoundedIcon from '@mui/icons-material/GraphicEqRounded';
 import StopIcon from '@mui/icons-material/Stop';
 import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
 import PlayCircleFilledWhiteRoundedIcon from '@mui/icons-material/PlayCircleFilledWhiteRounded';
+import { calc } from '@/utils';
 
 export default function DefaultMusicBox({
   musicBox,
@@ -29,6 +30,7 @@ export default function DefaultMusicBox({
         justifyContent: 'center',
         alignItems: 'center',
         p: 4,
+        maxHeight: calc('100svh - 80px'),
         my: {
           md: 10,
           sm: 8,
@@ -41,7 +43,13 @@ export default function DefaultMusicBox({
         <Typography
           variant={'h4'}
           sx={{
-            mb: 4,
+            mb: {
+              xl: 4,
+              lg: 4,
+              md: 3,
+              sm: 2,
+              xs: 2,
+            },
           }}
         >
           Music Box
@@ -52,7 +60,13 @@ export default function DefaultMusicBox({
           display: 'flex',
           justifyContent: 'space-between',
           width: '100%',
-          mb: 4,
+          mb: {
+            xl: 4,
+            lg: 4,
+            md: 3,
+            sm: 2,
+            xs: 2,
+          },
         }}
       >
         <Button
@@ -100,7 +114,13 @@ export default function DefaultMusicBox({
           flexDirection: 'row',
           width: '100%',
           '& > *': {
-            height: 200,
+            height: {
+              xl: 200,
+              lg: 160,
+              md: 120,
+              sm: 100,
+              xs: 60,
+            },
             flexGrow: 1,
           },
         }}
