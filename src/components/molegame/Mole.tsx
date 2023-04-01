@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import Image from 'next/image';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+
 interface MoleProps {
   position: {
     x: number;
@@ -38,8 +39,20 @@ const Mole: React.FC<MoleProps> = ({ position, onClick }) => {
     return (
       <Box
         sx={{
-          width: 90,
-          height: 90,
+          width: {
+            xl: 90,
+            lg: 90,
+            md: 80,
+            sm: 70,
+            xs: 70,
+          },
+          height: {
+            xl: 90,
+            lg: 90,
+            md: 80,
+            sm: 70,
+            xs: 70,
+          },
           position: 'absolute',
           top: position.y,
           left: position.x,
@@ -59,8 +72,20 @@ const Mole: React.FC<MoleProps> = ({ position, onClick }) => {
   return (
     <Box
       sx={{
-        width: 90,
-        height: 90,
+        width: {
+          xl: 90,
+          lg: 90,
+          md: 80,
+          sm: 70,
+          xs: 70,
+        },
+        height: {
+          xl: 90,
+          lg: 90,
+          md: 80,
+          sm: 70,
+          xs: 70,
+        },
         position: 'absolute',
         top: position.y,
         left: position.x,

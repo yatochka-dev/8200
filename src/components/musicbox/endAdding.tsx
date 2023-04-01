@@ -2,6 +2,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -12,6 +13,7 @@ import {
 } from '@mui/material';
 import useField from '@/hooks/useField';
 import type { ListOfRecordingsType, RecordingNameType } from '@/utils/types';
+import { FormEvent } from 'react';
 
 interface EndAddingProps {
   open: boolean;
@@ -57,75 +59,80 @@ export default function EndAdding({
 
   const recordingEmpty = recording.length <= 0;
 
+  const onSave = (event: FormEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    if (register.error || recordingEmpty) {
+      return;
+    }
+    save(value);
+    onClose();
+  };
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>Save recording</DialogTitle>
       <DialogContent>
-        <Typography sx={{ mb: 4 }}>
-          You sure you want to save this recording?
-        </Typography>
-        <TextField
-          {...register}
-          variant={'filled'}
-          label={'Recording Name'}
-          sx={{
-            width: '100%',
-            mb: 4,
-          }}
-          required
-        />
+        <Box component={'form'} onSubmit={onSave}>
+          <Typography sx={{ mb: 4 }}>
+            You sure you want to save this recording?
+          </Typography>
+          <TextField
+            {...register}
+            variant={'filled'}
+            label={'Recording Name'}
+            sx={{
+              width: '100%',
+              mb: 4,
+            }}
+            required
+          />
 
-        <Accordion variant={'outlined'}>
-          <AccordionSummary>
-            <Typography>Preview notes</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              {recording.map((note, index) => (
-                <span key={index}>{note}, &nbsp;</span>
-              ))}
+          <Accordion variant={'outlined'}>
+            <AccordionSummary>
+              <Typography>Preview notes</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                {recording.map((note, index) => (
+                  <span key={index}>{note}, &nbsp;</span>
+                ))}
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          {recordingEmpty && (
+            <Typography
+              variant={'caption'}
+              color={'error'}
+              sx={{
+                px: 3,
+              }}
+            >
+              You cannot save an empty recording.
             </Typography>
-          </AccordionDetails>
-        </Accordion>
+          )}
+          <DialogActions
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              px: 0,
+              pt: 3,
+            }}
+          >
+            <Button type={'submit'} disabled={register.error || recordingEmpty}>
+              Save
+            </Button>
+            <Button
+              color={'error'}
+              onClick={() => {
+                cancel();
+                onClose();
+              }}
+            >
+              Cancel
+            </Button>
+          </DialogActions>
+        </Box>
       </DialogContent>
-      {recordingEmpty && (
-        <Typography
-          variant={'caption'}
-          color={'error'}
-          sx={{
-            px: 3,
-          }}
-        >
-          You cannot save an empty recording.
-        </Typography>
-      )}
-      <DialogActions
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          px: 3,
-          pb: 3,
-        }}
-      >
-        <Button
-          onClick={() => {
-            save(value);
-            onClose();
-          }}
-          disabled={register.error || recordingEmpty}
-        >
-          Save
-        </Button>
-        <Button
-          color={'error'}
-          onClick={() => {
-            cancel();
-            onClose();
-          }}
-        >
-          Cancel
-        </Button>
-      </DialogActions>
     </Dialog>
   );
 }

@@ -54,7 +54,14 @@ export default function Molegame() {
             flexDirection: 'column',
           }}
         >
-          <Typography variant={'h2'} align={'center'} gutterBottom>
+          <Typography
+            variant={'h2'}
+            align={'center'}
+            gutterBottom
+            sx={{
+              display: !playing ? 'initial' : 'none',
+            }}
+          >
             Mole Game
           </Typography>
           {playing ? (
@@ -67,7 +74,16 @@ export default function Molegame() {
           {!playing ? (
             <Button onClick={handleStart}>Start the Game!</Button>
           ) : (
-            <Button onClick={handleStop}>Stop the Game!</Button>
+            <Button
+              onClick={handleStop}
+              sx={{
+                mt: 2,
+              }}
+              color={'error'}
+              variant={'outlined'}
+            >
+              Stop the Game!
+            </Button>
           )}
           <EndGameDialog
             endGameDialog={endGameDialog}

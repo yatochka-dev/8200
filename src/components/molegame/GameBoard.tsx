@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import Mole from '@/components/molegame/Mole';
-import { randomInteger } from '@/utils';
+import { calc, randomInteger } from '@/utils';
 
 type MoleType = {
   position: {
@@ -119,7 +119,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ handleGameEnd }) => {
         sx={{
           backgroundImage: `url("/grass.jpg")`,
           width: '100%',
-          height: 600,
+          height: calc('100svh - 150px'),
           position: 'relative',
           borderRadius: 1,
         }}
